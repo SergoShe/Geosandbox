@@ -1,4 +1,4 @@
-public class Circle extends Shape{
+public class Circle implements Shape{
     private final double radius;
 
     public Circle(double radius){

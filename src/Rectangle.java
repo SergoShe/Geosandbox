@@ -1,4 +1,4 @@
-public class Rectangle extends Shape{
+public class Rectangle implements Shape{
 
     private final double sideA;
     private final double sideB;

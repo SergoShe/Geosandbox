@@ -4,13 +4,30 @@ import java.io.InputStreamReader;
 
 public class ShapeBuilder {
 
-    public static Shape build(String string) throws IOException {
-        return switch (string) {
-            case "1" -> createRectangle();
-            case "2" -> createTriangle();
-            case "3" -> createCircle();
-            default -> throw new IllegalArgumentException("Error");
-        };
+    public static Shape build() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        boolean isCorrect = false;
+        Shape shape = null;
+        while (!isCorrect) {
+            System.out.println("Enter a figure:");
+            System.out.println("- Rectangle\n- Triangle\n- Circle");
+            switch (reader.readLine().toLowerCase()) {
+                case "rectangle" -> {
+                    shape = createRectangle();
+                    isCorrect = true;
+                }
+                case "triangle" -> {
+                    shape = createTriangle();
+                    isCorrect = true;
+                }
+                case "circle" -> {
+                    shape = createCircle();
+                    isCorrect = true;
+                }
+                default -> System.out.println("Incorrect. Try Again.\n");
+            }
+        }
+        return shape;
     }
 
     private static Shape createRectangle() throws IOException {

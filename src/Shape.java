@@ -1,5 +1,5 @@
-public abstract class Shape {
-    abstract public double showArea();
+public interface Shape {
+    double showArea();
 
-    abstract public double showPerimeter();
+    double showPerimeter();
 }
