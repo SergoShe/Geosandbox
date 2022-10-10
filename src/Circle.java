@@ -1,17 +1,17 @@
-public class Circle implements Shape{
+public class Circle implements Shape {
     private final double radius;
 
-    public Circle(double radius){
+    public Circle(double radius) {
         this.radius = radius;
     }
 
     @Override
-    public double showArea() {
-        return Math.PI*Math.pow(radius,2);
+    public double getArea() {
+        return Math.PI * Math.pow(radius, 2);
     }
 
     @Override
-    public double showPerimeter() {
-        return 2*Math.PI*radius;
+    public double getPerimeter() {
+        return 2 * Math.PI * radius;
     }
 }

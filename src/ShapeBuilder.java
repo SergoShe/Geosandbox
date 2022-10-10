@@ -6,28 +6,16 @@ public class ShapeBuilder {
 
     public static Shape build() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        boolean isCorrect = false;
-        Shape shape = null;
-        while (!isCorrect) {
-            System.out.println("Enter a figure:");
-            System.out.println("- Rectangle\n- Triangle\n- Circle");
-            switch (reader.readLine().toLowerCase()) {
-                case "rectangle" -> {
-                    shape = createRectangle();
-                    isCorrect = true;
-                }
-                case "triangle" -> {
-                    shape = createTriangle();
-                    isCorrect = true;
-                }
-                case "circle" -> {
-                    shape = createCircle();
-                    isCorrect = true;
-                }
-                default -> System.out.println("Incorrect. Try Again.\n");
-            }
-        }
-        return shape;
+        System.out.println("Enter figure number:");
+        System.out.println("1.Rectangle\n2.Triangle\n3.Circle");
+        Figure figure = Figure.valueOf(Integer.parseInt(reader.readLine()));
+        return switch (figure) {
+            case RECTANGLE -> createRectangle();
+
+            case TRIANGLE -> createTriangle();
+
+            case CIRCLE -> createCircle();
+        };
     }
 
     private static Shape createRectangle() throws IOException {
