@@ -21,7 +21,7 @@ enum InputShapeType {
 
     public static InputShapeType valueOf(int value) {
         if (!map.containsKey(value)) {
-            throw new IllegalArgumentException("Figure not found");
+            throw new IllegalArgumentException("Shape not found");
         }
         return map.get(value);
     }

@@ -20,28 +20,46 @@ public class ShapeBuilder {
 
     private Shape createRectangle() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter name: ");
+        String name = reader.readLine();
         System.out.print("Enter side A: ");
         double sideA = Double.parseDouble(reader.readLine());
         System.out.print("Enter side B: ");
         double sideB = Double.parseDouble(reader.readLine());
-        return new Rectangle(sideA, sideB);
+        if (!name.isEmpty()) {
+            return new Rectangle(name, sideA, sideB);
+        } else {
+            return new Rectangle(sideA, sideB);
+        }
     }
 
     private Shape createTriangle() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter name: ");
+        String name = reader.readLine();
         System.out.print("Enter side A: ");
         double sideA = Double.parseDouble(reader.readLine());
         System.out.print("Enter side B: ");
         double sideB = Double.parseDouble(reader.readLine());
         System.out.print("Enter side B: ");
         double sideC = Double.parseDouble(reader.readLine());
-        return new Triangle(sideA, sideB, sideC);
+        if (!name.isEmpty()) {
+            return new Triangle(name, sideA, sideB, sideC);
+        } else {
+            return new Triangle(sideA, sideB, sideC);
+        }
     }
 
     private Shape createCircle() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter name: ");
+        String name = reader.readLine();
         System.out.print("Enter radius: ");
         double radius = Double.parseDouble(reader.readLine());
-        return new Circle(radius);
+        if (!name.isEmpty()) {
+            return new Circle(name, radius);
+        } else {
+            return new Circle(radius);
+        }
     }
 }
