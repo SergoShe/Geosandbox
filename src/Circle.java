@@ -1,16 +1,9 @@
 public class Circle implements Shape {
     private final String name;
-    private static int count = 0;
     private final double radius;
 
     public Circle(String name, double radius) {
         this.name = name;
-        this.radius = radius;
-    }
-
-    public Circle(double radius) {
-        count++;
-        name = "Circle_" + count;
         this.radius = radius;
     }
 

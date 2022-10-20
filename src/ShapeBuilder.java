@@ -3,6 +3,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ShapeBuilder {
+    private int countCircle = 0;
+    private int countRectangle = 0;
+    private int countTriangle = 0;
 
     public Shape build() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -29,7 +32,9 @@ public class ShapeBuilder {
         if (!name.isEmpty()) {
             return new Rectangle(name, sideA, sideB);
         } else {
-            return new Rectangle(sideA, sideB);
+            countRectangle++;
+            name = "Rectangle_" + countRectangle;
+            return new Rectangle(name, sideA, sideB);
         }
     }
 
@@ -46,7 +51,9 @@ public class ShapeBuilder {
         if (!name.isEmpty()) {
             return new Triangle(name, sideA, sideB, sideC);
         } else {
-            return new Triangle(sideA, sideB, sideC);
+            countTriangle++;
+            name = "Triangle_" + countTriangle;
+            return new Triangle(name, sideA, sideB, sideC);
         }
     }
 
@@ -59,7 +66,9 @@ public class ShapeBuilder {
         if (!name.isEmpty()) {
             return new Circle(name, radius);
         } else {
-            return new Circle(radius);
+            countCircle++;
+            name = "Circle_" + countCircle;
+            return new Circle(name, radius);
         }
     }
 }
