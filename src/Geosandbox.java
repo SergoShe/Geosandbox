@@ -4,26 +4,30 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Geosandbox {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    public void start(ArrayList<Shape> shapeList) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        boolean isExit = false;
-        while (!isExit) {
-            System.out.println("Enter option number:");
-            System.out.println("1.New\n2.List\n0.Exit");
-            UserScenarioMode scenarioMode = UserScenarioMode.valueOf(Integer.parseInt(reader.readLine()));
-            switch (scenarioMode) {
-                case NEW -> {
-                    try {
-                        shapeList.add(newShape());
-                    } catch (IOException e) {
-                        System.out.println(e.getMessage());
-                    }
+    public void start() {
+        ArrayList<Shape> shapeList = new ArrayList<>();
+        work(shapeList);
+    }
+
+    private void work(ArrayList<Shape> shapeList) {
+        try {
+            boolean isExit = false;
+            while (!isExit) {
+                System.out.println("Enter option number:");
+                System.out.println("1.New\n2.List\n0.Exit");
+                UserScenarioMode scenarioMode = UserScenarioMode.valueOf(Integer.parseInt(reader.readLine()));
+                switch (scenarioMode) {
+                    case NEW -> shapeList.add(newShape());
+
+                    case LIST -> showList(shapeList);
+
+                    case EXIT -> isExit = true;
                 }
-                case LIST -> showList(shapeList);
-
-                case EXIT -> isExit = true;
             }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
