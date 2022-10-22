@@ -21,7 +21,7 @@ enum UserScenarioMode {
 
     public static UserScenarioMode valueOf(int value) {
         if (!map.containsKey(value)) {
-            throw new IllegalArgumentException("Wrong user mode");
+            throw new IllegalArgumentException();
         }
         return map.get(value);
     }

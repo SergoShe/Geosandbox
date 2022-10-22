@@ -17,13 +17,21 @@ public class Geosandbox {
             while (!isExit) {
                 System.out.println("Enter option number:");
                 System.out.println("1.New\n2.List\n0.Exit");
-                UserScenarioMode scenarioMode = UserScenarioMode.valueOf(Integer.parseInt(reader.readLine()));
-                switch (scenarioMode) {
-                    case NEW -> shapeList.add(newShape());
+                try {
+                    UserScenarioMode scenarioMode = UserScenarioMode.valueOf(Integer.parseInt(reader.readLine()));
+                    switch (scenarioMode) {
+                        case NEW -> {
+                            Shape shape = newShape();
+                            if (shape != null) {
+                                shapeList.add(shape);
+                            }
+                        }
+                        case LIST -> showList(shapeList);
 
-                    case LIST -> showList(shapeList);
-
-                    case EXIT -> isExit = true;
+                        case EXIT -> isExit = true;
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Incorrect symbol. Enter a number from list.\n");
                 }
             }
         } catch (IOException e) {

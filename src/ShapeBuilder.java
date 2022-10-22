@@ -9,16 +9,32 @@ public class ShapeBuilder {
 
     public Shape build() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter figure number:");
-        System.out.println("1.Rectangle\n2.Triangle\n3.Circle");
-        InputShapeType shapeType = InputShapeType.valueOf(Integer.parseInt(reader.readLine()));
-        return switch (shapeType) {
-            case RECTANGLE -> createRectangle();
+        boolean isBack = false;
+        while (!isBack) {
+            System.out.println("Enter figure number:");
+            System.out.println("1.Rectangle\n2.Triangle\n3.Circle\n0.Back");
+            try {
+                InputShapeType shapeType = InputShapeType.valueOf(Integer.parseInt(reader.readLine()));
+                switch (shapeType) {
+                    case RECTANGLE -> {
+                        return createRectangle();
+                    }
 
-            case TRIANGLE -> createTriangle();
+                    case TRIANGLE -> {
+                        return createTriangle();
+                    }
 
-            case CIRCLE -> createCircle();
-        };
+                    case CIRCLE -> {
+                        return createCircle();
+                    }
+
+                    case BACK -> isBack = true;
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Incorrect symbol. Enter a number from list.\n");
+            }
+        }
+        return null;
     }
 
     private Shape createRectangle() throws IOException {
@@ -29,13 +45,11 @@ public class ShapeBuilder {
         double sideA = Double.parseDouble(reader.readLine());
         System.out.print("Enter side B: ");
         double sideB = Double.parseDouble(reader.readLine());
-        if (!name.isEmpty()) {
-            return new Rectangle(name, sideA, sideB);
-        } else {
+        if (name.isEmpty()) {
             countRectangle++;
             name = "Rectangle_" + countRectangle;
-            return new Rectangle(name, sideA, sideB);
         }
+        return new Rectangle(name, sideA, sideB);
     }
 
     private Shape createTriangle() throws IOException {
@@ -48,13 +62,11 @@ public class ShapeBuilder {
         double sideB = Double.parseDouble(reader.readLine());
         System.out.print("Enter side B: ");
         double sideC = Double.parseDouble(reader.readLine());
-        if (!name.isEmpty()) {
-            return new Triangle(name, sideA, sideB, sideC);
-        } else {
+        if (name.isEmpty()) {
             countTriangle++;
             name = "Triangle_" + countTriangle;
-            return new Triangle(name, sideA, sideB, sideC);
         }
+        return new Triangle(name, sideA, sideB, sideC);
     }
 
     private Shape createCircle() throws IOException {
@@ -63,12 +75,10 @@ public class ShapeBuilder {
         String name = reader.readLine();
         System.out.print("Enter radius: ");
         double radius = Double.parseDouble(reader.readLine());
-        if (!name.isEmpty()) {
-            return new Circle(name, radius);
-        } else {
+        if (name.isEmpty()) {
             countCircle++;
             name = "Circle_" + countCircle;
-            return new Circle(name, radius);
         }
+        return new Circle(name, radius);
     }
 }
