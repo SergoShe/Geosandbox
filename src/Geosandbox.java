@@ -43,12 +43,12 @@ public class Geosandbox {
     }
 
     private void showList(ArrayList<Shape> shapeList) {
-        if (shapeList.isEmpty()) {
-            System.out.println("List is empty.");
-        } else {
+        if (!shapeList.isEmpty()) {
             for (Shape shape : shapeList) {
                 System.out.println(shape.getName());
             }
+        } else {
+            System.out.println("List is empty.");
         }
     }
 }
