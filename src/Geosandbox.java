@@ -12,34 +12,31 @@ public class Geosandbox {
     }
 
     private void work(ArrayList<Shape> shapeList) {
-        try {
-            boolean isExit = false;
-            while (!isExit) {
-                System.out.println("Enter option number:");
-                System.out.println("1.New\n2.List\n0.Exit");
-                try {
-                    UserScenarioMode scenarioMode = UserScenarioMode.valueOf(Integer.parseInt(reader.readLine()));
-                    switch (scenarioMode) {
-                        case NEW -> {
-                            Shape shape = newShape();
-                            if (shape != null) {
-                                shapeList.add(shape);
-                            }
+        boolean isExit = false;
+        while (!isExit) {
+            System.out.println("Enter option number:");
+            System.out.println("1.New\n2.List\n0.Exit");
+            try {
+                UserScenarioMode scenarioMode = UserScenarioMode.valueOf(Integer.parseInt(reader.readLine()));
+                switch (scenarioMode) {
+                    case NEW -> {
+                        Shape shape = newShape();
+                        if (shape != null) {
+                            shapeList.add(shape);
                         }
-                        case LIST -> showList(shapeList);
-
-                        case EXIT -> isExit = true;
                     }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Incorrect symbol. Enter a number from list.\n");
+                    case LIST -> showList(shapeList);
+
+                    case EXIT -> isExit = true;
                 }
+            } catch (IllegalArgumentException | IOException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Incorrect symbol. Enter a number from list.\n");
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 
-    private Shape newShape() throws IOException {
+    private Shape newShape() {
         ShapeBuilder shapeBuilder = new ShapeBuilder();
         return shapeBuilder.build();
     }

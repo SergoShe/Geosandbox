@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum InputShapeType {
-    BACK(0),
+    UNKNOWN(0),
     RECTANGLE(1),
     TRIANGLE(2),
     CIRCLE(3);
@@ -22,7 +22,7 @@ enum InputShapeType {
 
     public static InputShapeType valueOf(int value) {
         if (!map.containsKey(value)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Shape not found");
         }
         return map.get(value);
     }

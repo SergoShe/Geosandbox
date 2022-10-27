@@ -6,9 +6,9 @@ public class ShapeBuilder {
     private int countCircle = 0;
     private int countRectangle = 0;
     private int countTriangle = 0;
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    public Shape build() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    public Shape build() {
         boolean isBack = false;
         while (!isBack) {
             System.out.println("Enter figure number:");
@@ -28,9 +28,11 @@ public class ShapeBuilder {
                         return createCircle();
                     }
 
-                    case BACK -> isBack = true;
+                    case UNKNOWN -> isBack = true;
                 }
-            } catch (IllegalArgumentException e) {
+
+            } catch (IllegalArgumentException | IOException e) {
+                System.out.println(e.getMessage());
                 System.out.println("Incorrect symbol. Enter a number from list.\n");
             }
         }
@@ -38,7 +40,6 @@ public class ShapeBuilder {
     }
 
     private Shape createRectangle() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Enter name: ");
         String name = reader.readLine();
         System.out.print("Enter side A: ");
@@ -53,7 +54,6 @@ public class ShapeBuilder {
     }
 
     private Shape createTriangle() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Enter name: ");
         String name = reader.readLine();
         System.out.print("Enter side A: ");
@@ -70,7 +70,6 @@ public class ShapeBuilder {
     }
 
     private Shape createCircle() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Enter name: ");
         String name = reader.readLine();
         System.out.print("Enter radius: ");
