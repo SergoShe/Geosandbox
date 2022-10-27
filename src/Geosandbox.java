@@ -29,14 +29,15 @@ public class Geosandbox {
 
                     case EXIT -> isExit = true;
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("Enter incorrect commamd. Enter a number from list.\n");
             } catch (IllegalArgumentException | IOException e) {
                 System.out.println(e.getMessage());
-                System.out.println("Incorrect symbol. Enter a number from list.\n");
             }
         }
     }
 
-    private Shape newShape() {
+    private Shape newShape() throws IOException {
         ShapeBuilder shapeBuilder = new ShapeBuilder();
         return shapeBuilder.build();
     }

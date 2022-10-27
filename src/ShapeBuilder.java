@@ -8,7 +8,7 @@ public class ShapeBuilder {
     private int countTriangle = 0;
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    public Shape build() {
+    public Shape build() throws IOException {
         boolean isBack = false;
         while (!isBack) {
             System.out.println("Enter figure number:");
@@ -30,10 +30,11 @@ public class ShapeBuilder {
 
                     case UNKNOWN -> isBack = true;
                 }
-
-            } catch (IllegalArgumentException | IOException e) {
+            } catch (NumberFormatException e) {
+                System.out.println("Enter incorrect commamd. Enter a number from list.\n");
+            }
+            catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-                System.out.println("Incorrect symbol. Enter a number from list.\n");
             }
         }
         return null;
