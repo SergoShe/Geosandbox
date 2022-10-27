@@ -1,11 +1,17 @@
 public class Rectangle implements Shape {
-
+    private final String name;
     private final double sideA;
     private final double sideB;
 
-    public Rectangle(double sideA, double sideB) {
+    public Rectangle(String name, double sideA, double sideB) {
+        this.name = name;
         this.sideA = sideA;
         this.sideB = sideB;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override

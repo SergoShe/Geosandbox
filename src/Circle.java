@@ -1,8 +1,15 @@
 public class Circle implements Shape {
+    private final String name;
     private final double radius;
 
-    public Circle(double radius) {
+    public Circle(String name, double radius) {
+        this.name = name;
         this.radius = radius;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
