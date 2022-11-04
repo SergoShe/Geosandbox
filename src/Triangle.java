@@ -3,6 +3,7 @@ public class Triangle implements Shape {
     private final double sideA;
     private final double sideB;
     private final double sideC;
+    private final String type = Triangle.class.getTypeName();
 
     public Triangle(String name, double sideA, double sideB, double sideC) {
         this.name = name;
@@ -14,6 +15,11 @@ public class Triangle implements Shape {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 
     @Override
