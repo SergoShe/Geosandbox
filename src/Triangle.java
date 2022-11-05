@@ -17,6 +17,11 @@ public class Triangle implements Shape {
     }
 
     @Override
+    public String getType() {
+        return "Triangle";
+    }
+
+    @Override
     public double getArea() {
         double p = (sideA + sideB + sideC) / 2;
         return Math.sqrt(p * (p - sideA) * (p - sideB) * (p - sideC));

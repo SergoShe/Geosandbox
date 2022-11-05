@@ -13,6 +13,11 @@ public class Circle implements Shape {
     }
 
     @Override
+    public String getType() {
+        return "Circle";
+    }
+
+    @Override
     public double getArea() {
         return Math.PI * Math.pow(radius, 2);
     }
