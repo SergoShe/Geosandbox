@@ -65,7 +65,7 @@ public class Geosandbox {
                 System.out.println("Area: " + String.format("%.2f", shape.getArea()));
                 System.out.println("Perimeter: " + String.format("%.2f", shape.getPerimeter()));
             } else {
-                System.out.println("Shape not found");
+                System.out.println("Shape not found.");
             }
         } else {
             System.out.println("List is empty.");
