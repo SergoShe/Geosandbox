@@ -67,7 +67,11 @@ public class ShapeBuilder {
             countTriangle++;
             name = "Triangle_" + countTriangle;
         }
-        return new Triangle(name, sideA, sideB, sideC);
+        if ((sideA<sideB+sideC) && (sideB<sideA+sideC) && (sideC<sideA+sideB) ){
+            return new Triangle(name, sideA, sideB, sideC);
+        } else {
+            throw new IllegalArgumentException("Triangle doesn't exist");
+        }
     }
 
     private Shape createCircle() throws IOException {
