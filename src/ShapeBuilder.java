@@ -32,8 +32,7 @@ public class ShapeBuilder {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Enter incorrect command. Enter a number from list.\n");
-            }
-            catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -67,7 +66,7 @@ public class ShapeBuilder {
             countTriangle++;
             name = "Triangle_" + countTriangle;
         }
-        if ((sideA<sideB+sideC) && (sideB<sideA+sideC) && (sideC<sideA+sideB) ){
+        if ((sideA < sideB + sideC) && (sideB < sideA + sideC) && (sideC < sideA + sideB)) {
             return new Triangle(name, sideA, sideB, sideC);
         } else {
             throw new IllegalArgumentException("Triangle doesn't exist");
