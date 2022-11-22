@@ -31,9 +31,8 @@ public class ShapeBuilder {
                     case UNKNOWN -> isBack = true;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Enter incorrect commamd. Enter a number from list.\n");
-            }
-            catch (IllegalArgumentException e) {
+                System.out.println("Enter incorrect command. Enter a number from list.\n");
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -61,13 +60,17 @@ public class ShapeBuilder {
         double sideA = Double.parseDouble(reader.readLine());
         System.out.print("Enter side B: ");
         double sideB = Double.parseDouble(reader.readLine());
-        System.out.print("Enter side B: ");
+        System.out.print("Enter side С: ");
         double sideC = Double.parseDouble(reader.readLine());
         if (name.isEmpty()) {
             countTriangle++;
             name = "Triangle_" + countTriangle;
         }
-        return new Triangle(name, sideA, sideB, sideC);
+        if ((sideA < sideB + sideC) && (sideB < sideA + sideC) && (sideC < sideA + sideB)) {
+            return new Triangle(name, sideA, sideB, sideC);
+        } else {
+            throw new IllegalArgumentException("Triangle doesn't exist");
+        }
     }
 
     private Shape createCircle() throws IOException {

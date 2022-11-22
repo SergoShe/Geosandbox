@@ -1,13 +1,15 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Geosandbox {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public void start() {
-        HashMap<String, Shape> shapeList = new HashMap<>();
+        HashMap<String, Shape> shapeList = new LinkedHashMap<>();
         work(shapeList);
     }
 
@@ -64,12 +66,31 @@ public class Geosandbox {
                 System.out.println("Type: " + shape.getType());
                 System.out.println("Area: " + String.format("%.2f", shape.getArea()));
                 System.out.println("Perimeter: " + String.format("%.2f", shape.getPerimeter()));
+                switch (shapeList.get(shapeName).getType()) {
+                    case "Rectangle" -> {
+                        Rectangle rectangle = (Rectangle) shape;
+                        System.out.println("Sides: " + Arrays.toString(rectangle.getSides()));
+                        System.out.println("Diagonal: " + String.format("%.2f",rectangle.getDiagonal()));
+                        System.out.println("Is Square: " + rectangle.isSquare());
+                    }
+                    case "Triangle" -> {
+                        Triangle triangle = (Triangle) shape;
+                        System.out.println("Sides: " + Arrays.toString(triangle.getSides()));
+                        System.out.println("Angles: " + Arrays.toString(triangle.getAngles()));
+                        System.out.println("Is Right Triangle: " + triangle.isRightTriangle());
+                        System.out.println("Is Equilateral Triangle: " + triangle.isEquilateralTriangle());
+                    }
+                    case "Circle" -> {
+                        Circle circle = (Circle) shape;
+                        System.out.println("Radius: " + String.format("%.2f",circle.getRadius()));
+                        System.out.println("Diameter: " + String.format("%.2f",circle.getDiameter()));
+                    }
+                }
             } else {
                 System.out.println("Shape not found.");
             }
         } else {
             System.out.println("List is empty.");
         }
-
     }
 }

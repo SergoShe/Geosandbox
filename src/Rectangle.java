@@ -28,4 +28,16 @@ public class Rectangle implements Shape {
     public double getPerimeter() {
         return (sideA + sideB) * 2;
     }
+
+    public double[] getSides() {
+        return new double[]{sideA, sideB};
+    }
+
+    public double getDiagonal() {
+        return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
+    }
+
+    public boolean isSquare() {
+        return sideA == sideB;
+    }
 }
