@@ -3,6 +3,7 @@ public class Triangle implements Shape {
     private final double sideA;
     private final double sideB;
     private final double sideC;
+    private final InputShapeType type = InputShapeType.TRIANGLE;
 
     public Triangle(String name, double sideA, double sideB, double sideC) {
         this.name = name;
@@ -17,8 +18,8 @@ public class Triangle implements Shape {
     }
 
     @Override
-    public String getType() {
-        return "Triangle";
+    public InputShapeType getType() {
+        return type;
     }
 
     @Override

@@ -1,6 +1,7 @@
 public class Circle implements Shape {
     private final String name;
     private final double radius;
+    private final InputShapeType type = InputShapeType.CIRCLE;
 
     public Circle(String name, double radius) {
         this.name = name;
@@ -13,8 +14,8 @@ public class Circle implements Shape {
     }
 
     @Override
-    public String getType() {
-        return "Circle";
+    public InputShapeType getType() {
+        return type;
     }
 
     @Override

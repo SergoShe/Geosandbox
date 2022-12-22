@@ -17,7 +17,7 @@ public class Geosandbox {
         boolean isExit = false;
         while (!isExit) {
             System.out.println("Enter option number:");
-            System.out.println("1.New\n2.List\n3.Show shape\n0.Exit");
+            System.out.println("1.New\n2.List\n3.Show shape\n4.Export file\n0.Exit");
             try {
                 UserScenarioMode scenarioMode = UserScenarioMode.valueOf(Integer.parseInt(reader.readLine()));
                 switch (scenarioMode) {
@@ -32,6 +32,8 @@ public class Geosandbox {
                     case SHOW -> showShape(shapeList);
 
                     case EXIT -> isExit = true;
+
+                    case SAVE -> saveFile(shapeList);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Enter incorrect command. Enter a number from list.\n");
@@ -48,9 +50,7 @@ public class Geosandbox {
 
     private void showList(HashMap<String, Shape> shapeList) {
         if (!shapeList.isEmpty()) {
-            for (String shapeName : shapeList.keySet()) {
-                System.out.println(shapeName);
-            }
+            shapeList.keySet().forEach(System.out::println);
         } else {
             System.out.println("List is empty.");
         }
@@ -63,27 +63,27 @@ public class Geosandbox {
             if (shapeList.containsKey(shapeName)) {
                 Shape shape = shapeList.get(shapeName);
                 System.out.println("Name: " + shape.getName());
-                System.out.println("Type: " + shape.getType());
+                System.out.println("Type: " + shape.getType().toString().toLowerCase());
                 System.out.println("Area: " + String.format("%.2f", shape.getArea()));
                 System.out.println("Perimeter: " + String.format("%.2f", shape.getPerimeter()));
                 switch (shapeList.get(shapeName).getType()) {
-                    case "Rectangle" -> {
+                    case RECTANGLE -> {
                         Rectangle rectangle = (Rectangle) shape;
                         System.out.println("Sides: " + Arrays.toString(rectangle.getSides()));
-                        System.out.println("Diagonal: " + String.format("%.2f",rectangle.getDiagonal()));
+                        System.out.println("Diagonal: " + String.format("%.2f", rectangle.getDiagonal()));
                         System.out.println("Is Square: " + rectangle.isSquare());
                     }
-                    case "Triangle" -> {
+                    case TRIANGLE -> {
                         Triangle triangle = (Triangle) shape;
                         System.out.println("Sides: " + Arrays.toString(triangle.getSides()));
                         System.out.println("Angles: " + Arrays.toString(triangle.getAngles()));
                         System.out.println("Is Right Triangle: " + triangle.isRightTriangle());
                         System.out.println("Is Equilateral Triangle: " + triangle.isEquilateralTriangle());
                     }
-                    case "Circle" -> {
+                    case CIRCLE -> {
                         Circle circle = (Circle) shape;
-                        System.out.println("Radius: " + String.format("%.2f",circle.getRadius()));
-                        System.out.println("Diameter: " + String.format("%.2f",circle.getDiameter()));
+                        System.out.println("Radius: " + String.format("%.2f", circle.getRadius()));
+                        System.out.println("Diameter: " + String.format("%.2f", circle.getDiameter()));
                     }
                 }
             } else {
@@ -91,6 +91,26 @@ public class Geosandbox {
             }
         } else {
             System.out.println("List is empty.");
+        }
+    }
+
+    private void saveFile(HashMap<String, Shape> shapeList) throws IOException {
+        System.out.println("Enter name file: ");
+        String name = reader.readLine();
+        System.out.println("Enter file format:");
+        System.out.println("1.JSON\n2.XML");
+        String enter = reader.readLine();
+        if (enter.equals("1")) {
+            JSONWorker worker = new JSONWorker();
+            worker.toJSON(shapeList, name);
+        } else if (enter.equals("2")) {
+            XMLWorker worker = new XMLWorker();
+            try {
+                worker.toXML(shapeList, name);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
         }
     }
 }
