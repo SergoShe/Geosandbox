@@ -5,13 +5,13 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class JSONWorker {
+public class JsonBuilder {
 
     public void toJSON(HashMap<String, Shape> shapeList, String nameFIle) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(shapeList);
         BufferedWriter writer = new BufferedWriter(new FileWriter(nameFIle + ".json"));
-        writer.write(String.valueOf(json));
+        writer.write(json);
         writer.close();
     }
 

@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class XMLWorker {
+public class XMLBuilder {
 
     public void toXML(HashMap<String, Shape> shapeList, String nameFile) throws ParserConfigurationException, TransformerException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

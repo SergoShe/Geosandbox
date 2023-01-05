@@ -99,18 +99,26 @@ public class Geosandbox {
         String name = reader.readLine();
         System.out.println("Enter file format:");
         System.out.println("1.JSON\n2.XML");
-        String enter = reader.readLine();
-        if (enter.equals("1")) {
-            JSONWorker worker = new JSONWorker();
-            worker.toJSON(shapeList, name);
-        } else if (enter.equals("2")) {
-            XMLWorker worker = new XMLWorker();
-            try {
-                worker.toXML(shapeList, name);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+        try {
+            FileType type = FileType.valueOf(Integer.parseInt(reader.readLine()));
+            switch (type){
+                case JSON -> {
+                    JsonBuilder worker = new JsonBuilder();
+                    worker.toJSON(shapeList, name);
+                }
+                case XML -> {
+                    XMLBuilder worker = new XMLBuilder();
+                    try {
+                        worker.toXML(shapeList, name);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
             }
-
+        } catch (NumberFormatException e) {
+            System.out.println("Enter incorrect command. Enter a number from list.\n");
+        } catch (IllegalArgumentException | IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

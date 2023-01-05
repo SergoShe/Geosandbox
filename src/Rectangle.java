@@ -2,7 +2,7 @@ public class Rectangle implements Shape {
     private final String name;
     private final double sideA;
     private final double sideB;
-    private final InputShapeType type = InputShapeType.RECTANGLE;
+    private final ExternalShapeType type = ExternalShapeType.RECTANGLE;
 
     public Rectangle(String name, double sideA, double sideB) {
         this.name = name;
@@ -16,7 +16,7 @@ public class Rectangle implements Shape {
     }
 
     @Override
-    public InputShapeType getType() {
+    public ExternalShapeType getType() {
         return type;
     }
 
