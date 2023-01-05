@@ -14,7 +14,7 @@ public class ShapeBuilder {
             System.out.println("Enter figure number:");
             System.out.println("1.Rectangle\n2.Triangle\n3.Circle\n0.Back");
             try {
-                InputShapeType shapeType = InputShapeType.valueOf(Integer.parseInt(reader.readLine()));
+                ExternalShapeType shapeType = ExternalShapeType.valueOf(Integer.parseInt(reader.readLine()));
                 switch (shapeType) {
                     case RECTANGLE -> {
                         return createRectangle();

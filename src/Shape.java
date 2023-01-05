@@ -2,7 +2,7 @@ public interface Shape {
 
     String getName();
 
-    String getType();
+    ExternalShapeType getType();
 
     double getArea();
 

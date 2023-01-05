@@ -5,7 +5,8 @@ enum UserScenarioMode {
     EXIT(0),
     NEW(1),
     LIST(2),
-    SHOW(3);
+    SHOW(3),
+    SAVE(4);
 
     private final int value;
     private static final Map<Integer, UserScenarioMode> map = new HashMap<>();

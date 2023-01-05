@@ -1,26 +1,26 @@
 import java.util.HashMap;
 import java.util.Map;
 
-enum InputShapeType {
+enum ExternalShapeType {
     UNKNOWN(0),
     RECTANGLE(1),
     TRIANGLE(2),
     CIRCLE(3);
 
     private final int value;
-    private static final Map<Integer, InputShapeType> map = new HashMap<>();
+    private static final Map<Integer, ExternalShapeType> map = new HashMap<>();
 
-    InputShapeType(int value) {
+    ExternalShapeType(int value) {
         this.value = value;
     }
 
     static {
-        for (InputShapeType shapeType : InputShapeType.values()) {
+        for (ExternalShapeType shapeType : ExternalShapeType.values()) {
             map.put(shapeType.value, shapeType);
         }
     }
 
-    public static InputShapeType valueOf(int value) {
+    public static ExternalShapeType valueOf(int value) {
         if (!map.containsKey(value)) {
             throw new IllegalArgumentException("Shape not found");
         }
