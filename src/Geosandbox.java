@@ -1,39 +1,44 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class Geosandbox {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public void start() {
-        HashMap<String, Shape> shapeList = new LinkedHashMap<>();
+        ShapeList shapeList = new ShapeList();
         work(shapeList);
     }
 
-    private void work(HashMap<String, Shape> shapeList) {
+    private void work(ShapeList shapeList) {
         boolean isExit = false;
         while (!isExit) {
             System.out.println("Enter option number:");
-            System.out.println("1.New\n2.List\n3.Show shape\n4.Export file\n0.Exit");
+            System.out.println("1.New\n2.List\n3.Show shape\n4.Export file\n5.Import file\n0.Exit");
             try {
                 UserScenarioMode scenarioMode = UserScenarioMode.valueOf(Integer.parseInt(reader.readLine()));
                 switch (scenarioMode) {
                     case NEW -> {
                         Shape shape = newShape();
                         if (shape != null) {
-                            shapeList.put(shape.getName(), shape);
+                            shapeList.setShape(shape.getName(), shape);
                         }
                     }
-                    case LIST -> showList(shapeList);
+                    case LIST -> showList(shapeList.getShapeList());
 
-                    case SHOW -> showShape(shapeList);
+                    case SHOW -> showShape(shapeList.getShapeList());
 
                     case EXIT -> isExit = true;
 
-                    case SAVE -> saveFile(shapeList);
+                    case SAVE -> saveFile(shapeList.getShapeList());
+
+                    case LOAD -> {
+                        HashMap<String, Shape> list = loadFile();
+                        if (list != null) {
+                            shapeList.setShapeList(list);
+                        }
+                    }
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Enter incorrect command. Enter a number from list.\n");
@@ -101,24 +106,52 @@ public class Geosandbox {
         System.out.println("1.JSON\n2.XML");
         try {
             FileType type = FileType.valueOf(Integer.parseInt(reader.readLine()));
-            switch (type){
+            switch (type) {
                 case JSON -> {
                     JsonBuilder worker = new JsonBuilder();
                     worker.toJSON(shapeList, name);
                 }
                 case XML -> {
                     XMLBuilder worker = new XMLBuilder();
-                    try {
-                        worker.toXML(shapeList, name);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
+                    worker.toXML(shapeList, name);
                 }
             }
         } catch (NumberFormatException e) {
             System.out.println("Enter incorrect command. Enter a number from list.\n");
-        } catch (IllegalArgumentException | IOException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private HashMap<String, Shape> loadFile() {
+        ShapeList shapeList = null;
+        System.out.println("Enter file path:");
+        try {
+            String pathWay = String.valueOf(Path.of(reader.readLine()).toAbsolutePath());
+            File file = new File(pathWay);
+            if (!file.exists()) {
+                throw new FileNotFoundException("File not found.");
+            }
+            FileType fileType = FileType.valueOf(pathWay.substring(pathWay.lastIndexOf('.') + 1).toUpperCase());
+            switch (fileType) {
+                case XML -> {
+                    XMLBuilder worker = new XMLBuilder();
+                    shapeList = worker.fromXML(pathWay);
+                }
+                case JSON -> {
+                    JsonBuilder worker = new JsonBuilder();
+                    shapeList = worker.fromJSON(pathWay);
+                }
+            }
+            if (shapeList != null) {
+                return shapeList.getShapeList();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: incorrect type file.");
+        } catch (Exception e) {
+            System.out.println("Failed to read file.");
+            System.out.println("Error message: " + e.getMessage());
+        }
+        return null;
     }
 }

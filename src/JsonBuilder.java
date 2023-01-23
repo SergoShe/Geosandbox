@@ -3,21 +3,23 @@ import com.google.gson.GsonBuilder;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class JsonBuilder {
+    Gson gson;
 
     public void toJSON(HashMap<String, Shape> shapeList, String nameFIle) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(shapeList);
         BufferedWriter writer = new BufferedWriter(new FileWriter(nameFIle + ".json"));
         writer.write(json);
         writer.close();
     }
 
-    public HashMap<String, Shape> fromJSON() {
-        HashMap<String, Shape> shapeList = new LinkedHashMap<>();
-        //для следующего этапа
-        return shapeList;
+    public ShapeList fromJSON(String pathWay) throws FileNotFoundException {
+        gson = new GsonBuilder()
+                .registerTypeAdapter(ShapeList.class, new ShapeListDeserializer())
+                .create();
+        BufferedReader reader = new BufferedReader(new FileReader(pathWay));
+        return gson.fromJson(reader, ShapeList.class);
     }
 }
