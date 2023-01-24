@@ -2,7 +2,7 @@ public class Rectangle implements Shape {
     private final String name;
     private final double sideA;
     private final double sideB;
-    private final ExternalShapeType type = ExternalShapeType.RECTANGLE;
+    private transient final ExternalShapeType type = ExternalShapeType.RECTANGLE;
 
     public Rectangle(String name, double sideA, double sideB) {
         this.name = name;

@@ -1,7 +1,7 @@
 public class Circle implements Shape {
     private final String name;
     private final double radius;
-    private final ExternalShapeType type = ExternalShapeType.CIRCLE;
+    private transient final ExternalShapeType type = ExternalShapeType.CIRCLE;
 
     public Circle(String name, double radius) {
         this.name = name;

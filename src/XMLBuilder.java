@@ -39,8 +39,8 @@ public class XMLBuilder {
         transformer.transform(source, file);
     }
 
-    public ShapeList fromXML(String pathWay) throws XMLStreamException, FileNotFoundException {
-        ShapeList shapeList = new ShapeList();
+    public HashMap<String, Shape> fromXML(String pathWay) throws XMLStreamException, FileNotFoundException {
+        HashMap<String, Shape> shapeList = new HashMap<>();
         String name = "";
         ArrayList<Double> sides = new ArrayList<>();
         double radius = 0.0;
@@ -77,14 +77,14 @@ public class XMLBuilder {
                 if (endElement.getName().getLocalPart().equals("shape")) {
                     switch (shapeType) {
                         case RECTANGLE -> {
-                            shapeList.setShape(name, new Rectangle(name, sides.get(0), sides.get(1)));
+                            shapeList.put(name, new Rectangle(name, sides.get(0), sides.get(1)));
                             sides.clear();
                         }
                         case TRIANGLE -> {
-                            shapeList.setShape(name, new Triangle(name, sides.get(0), sides.get(1), sides.get(2)));
+                            shapeList.put(name, new Triangle(name, sides.get(0), sides.get(1), sides.get(2)));
                             sides.clear();
                         }
-                        case CIRCLE -> shapeList.setShape(name, new Circle(name, radius));
+                        case CIRCLE -> shapeList.put(name, new Circle(name, radius));
                     }
                 }
             }

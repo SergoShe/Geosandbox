@@ -7,11 +7,11 @@ public class Geosandbox {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public void start() {
-        ShapeList shapeList = new ShapeList();
+        HashMap<String, Shape> shapeList = new HashMap<>();
         work(shapeList);
     }
 
-    private void work(ShapeList shapeList) {
+    private void work(HashMap<String, Shape> shapeList) {
         boolean isExit = false;
         while (!isExit) {
             System.out.println("Enter option number:");
@@ -22,21 +22,21 @@ public class Geosandbox {
                     case NEW -> {
                         Shape shape = newShape();
                         if (shape != null) {
-                            shapeList.setShape(shape.getName(), shape);
+                            shapeList.put(shape.getName(), shape);
                         }
                     }
-                    case LIST -> showList(shapeList.getShapeList());
+                    case LIST -> showList(shapeList);
 
-                    case SHOW -> showShape(shapeList.getShapeList());
+                    case SHOW -> showShape(shapeList);
 
                     case EXIT -> isExit = true;
 
-                    case SAVE -> saveFile(shapeList.getShapeList());
+                    case SAVE -> saveFile(shapeList);
 
                     case LOAD -> {
                         HashMap<String, Shape> list = loadFile();
                         if (list != null) {
-                            shapeList.setShapeList(list);
+                            shapeList.putAll(list);
                         }
                     }
                 }
@@ -124,7 +124,7 @@ public class Geosandbox {
     }
 
     private HashMap<String, Shape> loadFile() {
-        ShapeList shapeList = null;
+        HashMap<String, Shape> shapeList = new HashMap<>();
         System.out.println("Enter file path:");
         try {
             String pathWay = String.valueOf(Path.of(reader.readLine()).toAbsolutePath());
@@ -134,17 +134,17 @@ public class Geosandbox {
             }
             FileType fileType = FileType.valueOf(pathWay.substring(pathWay.lastIndexOf('.') + 1).toUpperCase());
             switch (fileType) {
+                case JSON -> {
+                    JsonBuilder worker = new JsonBuilder();
+                    shapeList = transformShapeList(worker.fromJSON(pathWay));
+                }
                 case XML -> {
                     XMLBuilder worker = new XMLBuilder();
                     shapeList = worker.fromXML(pathWay);
                 }
-                case JSON -> {
-                    JsonBuilder worker = new JsonBuilder();
-                    shapeList = worker.fromJSON(pathWay);
-                }
             }
             if (shapeList != null) {
-                return shapeList.getShapeList();
+                return shapeList;
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Error: incorrect type file.");
@@ -153,5 +153,13 @@ public class Geosandbox {
             System.out.println("Error message: " + e.getMessage());
         }
         return null;
+    }
+
+    private HashMap<String, Shape> transformShapeList(ShapeList inputShapeList) {
+        HashMap<String, Shape> shapeList = new HashMap<>();
+        inputShapeList.getRectangles().forEach(shape -> shapeList.put(shape.getName(), new Rectangle(shape.getName(), shape.getSides()[0], shape.getSides()[1])));
+        inputShapeList.getTriangles().forEach(shape -> shapeList.put(shape.getName(), new Triangle(shape.getName(), shape.getSides()[0], shape.getSides()[1], shape.getSides()[2])));
+        inputShapeList.getCircles().forEach(shape -> shapeList.put(shape.getName(), new Circle(shape.getName(), shape.getRadius())));
+        return shapeList;
     }
 }

@@ -1,23 +1,43 @@
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 
 public class ShapeList {
-    HashMap<String, Shape> shapeList = new LinkedHashMap<>();
+    private ArrayList<Rectangle> rectangles = new ArrayList<>();
+    private ArrayList<Triangle> triangles = new ArrayList<>();
+    private ArrayList<Circle> circles = new ArrayList<>();
 
-    public HashMap<String, Shape> getShapeList() {
-        return new LinkedHashMap<>(shapeList);
+    public ArrayList<Rectangle> getRectangles() {
+        return rectangles;
     }
 
-    public Shape getShape(String name){
-        return shapeList.get(name);
+    public void setRectangles(ArrayList<Rectangle> rectangles) {
+        this.rectangles = rectangles;
     }
 
-    public void setShapeList(HashMap<String, Shape> shapeList) {
-        this.shapeList.putAll(shapeList);
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangles.add(rectangle);
     }
 
-    public void setShape(String name, Shape shape){
-        this.shapeList.put(name,shape);
+    public ArrayList<Triangle> getTriangles() {
+        return triangles;
     }
 
+    public void setTriangles(ArrayList<Triangle> triangles) {
+        this.triangles = triangles;
+    }
+
+    public void setTriangle(Triangle triangle) {
+        this.triangles.add(triangle);
+    }
+
+    public ArrayList<Circle> getCircles() {
+        return circles;
+    }
+
+    public void setCircles(ArrayList<Circle> circles) {
+        this.circles = circles;
+    }
+
+    public void setCircle(Circle circle) {
+        this.circles.add(circle);
+    }
 }
