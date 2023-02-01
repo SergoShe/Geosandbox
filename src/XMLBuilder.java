@@ -2,18 +2,26 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.*;
+import javax.xml.stream.events.Attribute;
+import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class XMLBuilder {
 
@@ -31,9 +39,57 @@ public class XMLBuilder {
         transformer.transform(source, file);
     }
 
-    public HashMap<String, Shape> fromXML() {
-        HashMap<String, Shape> shapeList = new LinkedHashMap<>();
-        //для следующего этапа
+    public HashMap<String, Shape> fromXML(String pathWay) throws XMLStreamException, FileNotFoundException {
+        HashMap<String, Shape> shapeList = new HashMap<>();
+        String name = "";
+        ArrayList<Double> sides = new ArrayList<>();
+        double radius = 0.0;
+        ExternalShapeType shapeType = ExternalShapeType.UNKNOWN;
+        XMLInputFactory factory = XMLInputFactory.newInstance();
+        XMLEventReader reader = factory.createXMLEventReader(new FileReader(pathWay));
+
+        while (reader.hasNext()) {
+            XMLEvent event = reader.nextEvent();
+            if (event.isStartElement()) {
+                StartElement startElement = event.asStartElement();
+                String tagName = startElement.getName().getLocalPart();
+                switch (tagName) {
+                    case "shape" -> {
+                        Attribute type = startElement.getAttributeByName(new QName("type"));
+                        shapeType = ExternalShapeType.valueOf(type.getValue());
+                    }
+                    case "name" -> {
+                        event = reader.nextEvent();
+                        name = event.asCharacters().getData();
+                    }
+                    case "side" -> {
+                        event = reader.nextEvent();
+                        sides.add(Double.valueOf(event.asCharacters().getData()));
+                    }
+                    case "radius" -> {
+                        event = reader.nextEvent();
+                        radius = Double.parseDouble(event.asCharacters().getData());
+                    }
+                }
+            }
+
+            if (event.isEndElement()) {
+                EndElement endElement = event.asEndElement();
+                if (endElement.getName().getLocalPart().equals("shape")) {
+                    switch (shapeType) {
+                        case RECTANGLE -> {
+                            shapeList.put(name, new Rectangle(name, sides.get(0), sides.get(1)));
+                            sides.clear();
+                        }
+                        case TRIANGLE -> {
+                            shapeList.put(name, new Triangle(name, sides.get(0), sides.get(1), sides.get(2)));
+                            sides.clear();
+                        }
+                        case CIRCLE -> shapeList.put(name, new Circle(name, radius));
+                    }
+                }
+            }
+        }
         return shapeList;
     }
 

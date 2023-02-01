@@ -1,15 +1,13 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class Geosandbox {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public void start() {
-        HashMap<String, Shape> shapeList = new LinkedHashMap<>();
+        HashMap<String, Shape> shapeList = new HashMap<>();
         work(shapeList);
     }
 
@@ -17,7 +15,7 @@ public class Geosandbox {
         boolean isExit = false;
         while (!isExit) {
             System.out.println("Enter option number:");
-            System.out.println("1.New\n2.List\n3.Show shape\n4.Export file\n0.Exit");
+            System.out.println("1.New\n2.List\n3.Show shape\n4.Export file\n5.Import file\n0.Exit");
             try {
                 UserScenarioMode scenarioMode = UserScenarioMode.valueOf(Integer.parseInt(reader.readLine()));
                 switch (scenarioMode) {
@@ -34,6 +32,13 @@ public class Geosandbox {
                     case EXIT -> isExit = true;
 
                     case SAVE -> saveFile(shapeList);
+
+                    case LOAD -> {
+                        HashMap<String, Shape> list = loadFile();
+                        if (list != null) {
+                            shapeList.putAll(list);
+                        }
+                    }
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Enter incorrect command. Enter a number from list.\n");
@@ -101,24 +106,60 @@ public class Geosandbox {
         System.out.println("1.JSON\n2.XML");
         try {
             FileType type = FileType.valueOf(Integer.parseInt(reader.readLine()));
-            switch (type){
+            switch (type) {
                 case JSON -> {
                     JsonBuilder worker = new JsonBuilder();
                     worker.toJSON(shapeList, name);
                 }
                 case XML -> {
                     XMLBuilder worker = new XMLBuilder();
-                    try {
-                        worker.toXML(shapeList, name);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
+                    worker.toXML(shapeList, name);
                 }
             }
         } catch (NumberFormatException e) {
             System.out.println("Enter incorrect command. Enter a number from list.\n");
-        } catch (IllegalArgumentException | IOException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private HashMap<String, Shape> loadFile() {
+        HashMap<String, Shape> shapeList = new HashMap<>();
+        System.out.println("Enter file path:");
+        try {
+            String pathWay = String.valueOf(Path.of(reader.readLine()).toAbsolutePath());
+            File file = new File(pathWay);
+            if (!file.exists()) {
+                throw new FileNotFoundException("File not found.");
+            }
+            FileType fileType = FileType.valueOf(pathWay.substring(pathWay.lastIndexOf('.') + 1).toUpperCase());
+            switch (fileType) {
+                case JSON -> {
+                    JsonBuilder worker = new JsonBuilder();
+                    shapeList = transformShapeList(worker.fromJSON(pathWay));
+                }
+                case XML -> {
+                    XMLBuilder worker = new XMLBuilder();
+                    shapeList = worker.fromXML(pathWay);
+                }
+            }
+            if (shapeList != null) {
+                return shapeList;
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: incorrect type file.");
+        } catch (Exception e) {
+            System.out.println("Failed to read file.");
+            System.out.println("Error message: " + e.getMessage());
+        }
+        return null;
+    }
+
+    private HashMap<String, Shape> transformShapeList(ShapeList inputShapeList) {
+        HashMap<String, Shape> shapeList = new HashMap<>();
+        inputShapeList.getRectangles().forEach(shape -> shapeList.put(shape.getName(), new Rectangle(shape.getName(), shape.getSides()[0], shape.getSides()[1])));
+        inputShapeList.getTriangles().forEach(shape -> shapeList.put(shape.getName(), new Triangle(shape.getName(), shape.getSides()[0], shape.getSides()[1], shape.getSides()[2])));
+        inputShapeList.getCircles().forEach(shape -> shapeList.put(shape.getName(), new Circle(shape.getName(), shape.getRadius())));
+        return shapeList;
     }
 }
