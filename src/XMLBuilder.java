@@ -47,6 +47,7 @@ public class XMLBuilder {
         ExternalShapeType shapeType = ExternalShapeType.UNKNOWN;
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLEventReader reader = factory.createXMLEventReader(new FileReader(pathWay));
+
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
             if (event.isStartElement()) {
