@@ -1,5 +1,12 @@
+package parsers;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import geosandbox.*;
+import geosandbox.shape.Circle;
+import geosandbox.shape.Rectangle;
+import geosandbox.shape.Shape;
+import geosandbox.shape.Triangle;
 
 import java.io.*;
 import java.util.Collection;

@@ -1,3 +1,13 @@
+package geosandbox;
+
+import geosandbox.shape.Circle;
+import geosandbox.shape.Rectangle;
+import geosandbox.shape.Shape;
+import geosandbox.shape.Triangle;
+import parsers.FileType;
+import parsers.JsonBuilder;
+import parsers.XMLBuilder;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -5,10 +15,14 @@ import java.util.HashMap;
 
 public class Geosandbox {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    HashMap<String, Shape> shapeList;
+    public Geosandbox(ShapeList shapeList){
+        this.shapeList = transformShapeList(shapeList);
+    }
 
-    public void start() {
-        HashMap<String, Shape> shapeList = new HashMap<>();
+    public HashMap<String, Shape>  start() {
         work(shapeList);
+        return shapeList;
     }
 
     private void work(HashMap<String, Shape> shapeList) {
@@ -82,8 +96,8 @@ public class Geosandbox {
                         Triangle triangle = (Triangle) shape;
                         System.out.println("Sides: " + Arrays.toString(triangle.getSides()));
                         System.out.println("Angles: " + Arrays.toString(triangle.getAngles()));
-                        System.out.println("Is Right Triangle: " + triangle.isRightTriangle());
-                        System.out.println("Is Equilateral Triangle: " + triangle.isEquilateralTriangle());
+                        System.out.println("Is Right other.shape.Triangle: " + triangle.isRightTriangle());
+                        System.out.println("Is Equilateral other.shape.Triangle: " + triangle.isEquilateralTriangle());
                     }
                     case CIRCLE -> {
                         Circle circle = (Circle) shape;
@@ -92,7 +106,7 @@ public class Geosandbox {
                     }
                 }
             } else {
-                System.out.println("Shape not found.");
+                System.out.println("other.shape.Shape not found.");
             }
         } else {
             System.out.println("List is empty.");

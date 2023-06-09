@@ -1,3 +1,7 @@
+package geosandbox.shape;
+
+import geosandbox.ExternalShapeType;
+
 public class Rectangle implements Shape {
     private final String name;
     private final double sideA;

@@ -1,7 +1,9 @@
+package geosandbox;
+
 import java.util.HashMap;
 import java.util.Map;
 
-enum ExternalShapeType {
+public enum ExternalShapeType {
     UNKNOWN(0),
     RECTANGLE(1),
     TRIANGLE(2),
@@ -22,7 +24,7 @@ enum ExternalShapeType {
 
     public static ExternalShapeType valueOf(int value) {
         if (!map.containsKey(value)) {
-            throw new IllegalArgumentException("Shape not found");
+            throw new IllegalArgumentException("other.shape.Shape not found");
         }
         return map.get(value);
     }

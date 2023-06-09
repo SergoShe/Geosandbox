@@ -1,6 +1,13 @@
+package parsers;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import geosandbox.*;
+import geosandbox.shape.Circle;
+import geosandbox.shape.Rectangle;
+import geosandbox.shape.Shape;
+import geosandbox.shape.Triangle;
 
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;

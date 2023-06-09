@@ -1,7 +1,9 @@
+package parsers;
+
 import java.util.HashMap;
 import java.util.Map;
 
-enum FileType {
+public enum FileType {
     JSON(1),
     XML(2);
 
