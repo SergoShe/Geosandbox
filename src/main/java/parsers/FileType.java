@@ -16,7 +16,7 @@ public enum FileType {
 
     static {
         for (FileType type : FileType.values()) {
-            map.put(type.value, type);
+            map.put(type.getValue(), type);
         }
     }
 

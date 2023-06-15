@@ -35,9 +35,8 @@ public class SQLConnector {
                     case CIRCLE -> shapeList.setCircle(gson.fromJson(resultSet.getString(3), Circle.class));
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
         return shapeList;
@@ -48,23 +47,26 @@ public class SQLConnector {
             Class.forName(driver);
             Connection conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
-            statement.execute("truncate table shape");
-            shapeList.values().forEach(shape -> setShape(shape, statement));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+            try {
+                conn.setAutoCommit(false);
+                statement.execute("truncate table shape");
+                for (Shape shape : shapeList.values()) {
+                    uploadShape(shape, statement);
+                }
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+            }
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void setShape(Shape shape, Statement statement) {
+    private void uploadShape(Shape shape, Statement statement) throws SQLException {
         gson = new GsonBuilder().setPrettyPrinting().create();
         String shapeType = shape.getType().toString().toLowerCase();
         String body = gson.toJson(shape);
-        try {
-            statement.executeUpdate("insert into shape (shapeType, body) values ('" + shapeType + "','" + body + "')");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        statement.executeUpdate("insert into shape (shapeType, body) values ('" + shapeType + "','" + body + "')");
     }
 }

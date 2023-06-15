@@ -96,8 +96,8 @@ public class Geosandbox {
                         Triangle triangle = (Triangle) shape;
                         System.out.println("Sides: " + Arrays.toString(triangle.getSides()));
                         System.out.println("Angles: " + Arrays.toString(triangle.getAngles()));
-                        System.out.println("Is Right other.shape.Triangle: " + triangle.isRightTriangle());
-                        System.out.println("Is Equilateral other.shape.Triangle: " + triangle.isEquilateralTriangle());
+                        System.out.println("Is Right Triangle: " + triangle.isRightTriangle());
+                        System.out.println("Is Equilateral Triangle: " + triangle.isEquilateralTriangle());
                     }
                     case CIRCLE -> {
                         Circle circle = (Circle) shape;
@@ -106,7 +106,7 @@ public class Geosandbox {
                     }
                 }
             } else {
-                System.out.println("other.shape.Shape not found.");
+                System.out.println("Shape not found.");
             }
         } else {
             System.out.println("List is empty.");

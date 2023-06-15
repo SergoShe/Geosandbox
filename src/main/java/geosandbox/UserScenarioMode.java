@@ -20,7 +20,7 @@ enum UserScenarioMode {
 
     static {
         for (UserScenarioMode mode : UserScenarioMode.values()) {
-            map.put(mode.value, mode);
+            map.put(mode.getValue(), mode);
         }
     }
 

@@ -18,13 +18,13 @@ public enum ExternalShapeType {
 
     static {
         for (ExternalShapeType shapeType : ExternalShapeType.values()) {
-            map.put(shapeType.value, shapeType);
+            map.put(shapeType.getValue(), shapeType);
         }
     }
 
     public static ExternalShapeType valueOf(int value) {
         if (!map.containsKey(value)) {
-            throw new IllegalArgumentException("other.shape.Shape not found");
+            throw new IllegalArgumentException("Shape not found");
         }
         return map.get(value);
     }
