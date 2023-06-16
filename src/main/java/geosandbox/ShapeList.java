@@ -1,3 +1,9 @@
+package geosandbox;
+
+import geosandbox.shape.Circle;
+import geosandbox.shape.Rectangle;
+import geosandbox.shape.Triangle;
+
 import java.util.ArrayList;
 
 public class ShapeList {

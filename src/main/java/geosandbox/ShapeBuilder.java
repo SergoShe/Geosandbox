@@ -1,3 +1,10 @@
+package geosandbox;
+
+import geosandbox.shape.Circle;
+import geosandbox.shape.Rectangle;
+import geosandbox.shape.Shape;
+import geosandbox.shape.Triangle;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -69,7 +76,7 @@ public class ShapeBuilder {
         if ((sideA < sideB + sideC) && (sideB < sideA + sideC) && (sideC < sideA + sideB)) {
             return new Triangle(name, sideA, sideB, sideC);
         } else {
-            throw new IllegalArgumentException("Triangle doesn't exist");
+            throw new IllegalArgumentException("other.shape.Triangle doesn't exist");
         }
     }
 

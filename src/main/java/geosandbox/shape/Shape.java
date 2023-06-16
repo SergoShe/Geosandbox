@@ -1,3 +1,7 @@
+package geosandbox.shape;
+
+import geosandbox.ExternalShapeType;
+
 public interface Shape {
 
     String getName();

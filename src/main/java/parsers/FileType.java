@@ -1,7 +1,9 @@
+package parsers;
+
 import java.util.HashMap;
 import java.util.Map;
 
-enum FileType {
+public enum FileType {
     JSON(1),
     XML(2);
 
@@ -14,7 +16,7 @@ enum FileType {
 
     static {
         for (FileType type : FileType.values()) {
-            map.put(type.value, type);
+            map.put(type.getValue(), type);
         }
     }
 

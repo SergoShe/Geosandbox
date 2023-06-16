@@ -1,7 +1,9 @@
+package geosandbox;
+
 import java.util.HashMap;
 import java.util.Map;
 
-enum ExternalShapeType {
+public enum ExternalShapeType {
     UNKNOWN(0),
     RECTANGLE(1),
     TRIANGLE(2),
@@ -16,7 +18,7 @@ enum ExternalShapeType {
 
     static {
         for (ExternalShapeType shapeType : ExternalShapeType.values()) {
-            map.put(shapeType.value, shapeType);
+            map.put(shapeType.getValue(), shapeType);
         }
     }
 

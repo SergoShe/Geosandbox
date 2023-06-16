@@ -1,3 +1,13 @@
+package geosandbox;
+
+import geosandbox.shape.Circle;
+import geosandbox.shape.Rectangle;
+import geosandbox.shape.Shape;
+import geosandbox.shape.Triangle;
+import parsers.FileType;
+import parsers.JsonBuilder;
+import parsers.XMLBuilder;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -5,10 +15,14 @@ import java.util.HashMap;
 
 public class Geosandbox {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    HashMap<String, Shape> shapeList;
+    public Geosandbox(ShapeList shapeList){
+        this.shapeList = transformShapeList(shapeList);
+    }
 
-    public void start() {
-        HashMap<String, Shape> shapeList = new HashMap<>();
+    public HashMap<String, Shape>  start() {
         work(shapeList);
+        return shapeList;
     }
 
     private void work(HashMap<String, Shape> shapeList) {
